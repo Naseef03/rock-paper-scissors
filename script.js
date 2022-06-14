@@ -49,3 +49,31 @@ function playRound(playerSelection, computerSelection) {
       }
   }
 }
+
+function game() {
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (i=0; i<5; i++) {
+    let playerSelection = prompt('Your choice?');
+    let computerSelection = computerPlay();
+
+    let result = playRound(playerSelection, computerSelection);
+
+    if (result.startsWith('You Win')) playerScore++
+    else if (result.startsWith('You Lose')) computerScore++
+
+    console.log(result);
+    console.log(`
+    Total Score
+    Player:   ${playerScore}
+    Computer: ${computerScore}
+    `);
+  }
+
+  if (playerScore > computerScore) console.log("You Win");
+  else if (playerScore < computerScore) console.log("You Lose");
+  else console.log('Tie');
+}
+
+game()
