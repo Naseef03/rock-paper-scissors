@@ -50,42 +50,40 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-// function game(playerSelection) {
-//   let playerScore = 0;
-//   let computerScore = 0;
 
-//   for (i=0; i<5; i++) {
-//     let playerSelection = prompt('Your choice?');
-//     let computerSelection = computerPlay();
 
-//     let result = playRound(playerSelection, computerSelection);
 
-//     if (result.startsWith('You Win')) playerScore++
-//     else if (result.startsWith('You Lose')) computerScore++
+function game(playerSelection) {
+  let computerSelection = computerPlay();
 
-//     console.log(result);
-//     console.log(`
-//     Total Score
-//     Player:   ${playerScore}
-//     Computer: ${computerScore}
-//     `);
-//   }
+  let result = playRound(playerSelection, computerSelection);
 
-//   if (playerScore > computerScore) console.log("You Win");
-//   else if (playerScore < computerScore) console.log("You Lose");
-//   else console.log('Tie');
+  if (result.startsWith('You Win')) playerScore++
+  else if (result.startsWith('You Lose')) computerScore++
 
-//   console.log(playRound(playerSelection, computerPlay()));
-// }
+  if (playerScore >= 5 || computerScore >= 5) {
+    result = 'Math end ' + 
+              (playerScore > computerScore ? 'You Win': 'You Lose');
+    playerScore = 0;
+    computerScore = 0;
+  }
 
-function showResult(playerSelection) {
-  const result = playRound(playerSelection, computerPlay());
-  console.log(result);
+  scoreBoard.innerHTML = (`
+    ${result}<br>
+    Total Score<br>
+    Player:   ${playerScore}<br>
+    Computer: ${computerScore}<br>
+    `);
 }
 
-const btns = document.querySelectorAll('button');
-btns.forEach(btn => {
+let playerScore = 0;
+let computerScore = 0;
+
+const scoreBoard = document.querySelector('#scoreBoard');
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(btn => {
   btn.addEventListener('click', (e) => {
-    showResult(e.target.textContent);
+    game(e.target.textContent);
   });
 });
